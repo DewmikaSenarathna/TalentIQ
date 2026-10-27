@@ -1,6 +1,30 @@
+<p align="center">
+  <img src="frontend/public/logo.png" width="300" alt="TalentIQ Logo">
+</p>
+
+<h1 align="center">🧠 TalentIQ</h1>
+
+<p align="center">
+  <strong>AI-Powered Applicant Tracking and Talent Intelligence Platform</strong>
+</p>
+
+<p align="center">
+  Transforming hundreds of applications into the right talent through
+  intelligent candidate screening, job matching, candidate ranking
+  and recruiter-focused decision support.
+</p>
+
+<p align="center">
+  <em>"From Hundreds of Applications to the Right Talent."</em>
+</p>
+
+---
+
 # TalentIQ – AI Applicant Tracking System
 
 **Created and built by Don Dew.** TalentIQ helps a recruiter who receives hundreds of applications to screen, match and rank candidates in minutes.
+
+---
 
 ## Features
 | Feature | How it works |
@@ -9,6 +33,8 @@
 | **AI Candidate–Job Matching** | Every candidate is scored 0–100 against a job: **60 %** required-skill coverage, **25 %** experience vs. the minimum required, **15 %** keyword overlap with the job description. |
 | **Candidate Ranking** | Candidates are sorted strongest → weakest, with matched and missing skills shown per person. |
 | **Bulk CV Upload** | Select hundreds of files at once; the browser sends them in batches of 25 with a progress bar and a per-file failure report. |
+
+---
 
 ## Stack (the "MERN" mapping, in TypeScript)
 | MERN | TalentIQ |
@@ -28,6 +54,8 @@ talentiq/
 ```
 Request flow: `Browser (Vercel) → HTTPS → Express API (Render) → MongoDB Atlas`.
 
+---
+
 ## Deploy (no local setup required)
 1. **Database** – Create a free cluster on MongoDB Atlas, add a database user, and under *Network Access* allow `0.0.0.0/0` (Render's IPs change). Copy the connection string.
 2. **Push to GitHub** – Upload this whole folder as one repository.
@@ -39,6 +67,8 @@ Request flow: `Browser (Vercel) → HTTPS → Express API (Render) → MongoDB A
 4. **Frontend on Vercel** – *Add New Project*, import the repo, set **Root Directory = `frontend`** (framework Vite is auto-detected). Add the environment variable `VITE_API_URL` = your Render URL (e.g. `https://talentiq-api.onrender.com`, no trailing slash). Deploy.
 5. Go back to Render, set `CLIENT_URL` to the Vercel URL, and redeploy. Open the Vercel URL and sign in.
 
+---
+
 ## Design decisions
 - **Candidates are a pool; ranking is computed on demand.** The parsed CV text is stored, so one upload can be ranked against any job, and editing a job never leaves stale scores.
 - **Transparent, rule-based scoring instead of a black-box model.** Recruiters can see *why* someone scored 72 % (matched vs. missing skills). It is deterministic, free to run, fast for hundreds of CVs, and sends no candidate personal data to third parties. `screening.ts` is isolated so an LLM can replace `parseCandidate` / `score` without touching the rest.
@@ -48,6 +78,8 @@ Request flow: `Browser (Vercel) → HTTPS → Express API (Render) → MongoDB A
 - **Production-first config.** No localhost URLs are hard-coded: the API address (`VITE_API_URL`) and the CORS allow-list (`CLIENT_URL`) come only from environment variables.
 - **Plain Vite SPA, single `App.tsx`** – easy to read if you are learning how a MERN-style app fits together.
 
+---
+
 ## Assumptions
 - One recruiter organisation (single shared login), not multi-tenant.
 - CVs are English-language, text-based PDFs, DOCX or TXT, max 5 MB each. Scanned/image PDFs have no text layer and are reported as failed (OCR is not included).
@@ -56,6 +88,8 @@ Request flow: `Browser (Vercel) → HTTPS → Express API (Render) → MongoDB A
 - The built-in skills dictionary (~80 common skills) powers each candidate's skill list; job-required skills are matched against the full text, so any skill you type works.
 - Render's free tier sleeps after inactivity, so the first request can take ~30–60 s. MongoDB Atlas free tier (512 MB) is enough for thousands of CVs.
 - Scores are decision support, not an automated hiring decision; keep a human in the loop and consider bias/privacy rules (e.g. GDPR) when processing CVs.
+
+---
 
 ## Roadmap
 LLM-based parsing, OCR for scanned CVs, multi-user roles, pipeline stages (Applied → Interview → Offer), CSV export, semantic matching with embeddings.
