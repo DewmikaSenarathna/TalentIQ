@@ -67,6 +67,12 @@ Request flow: `Browser (Vercel) → HTTPS → Express API (Render) → MongoDB A
 4. **Frontend on Vercel** – *Add New Project*, import the repo, set **Root Directory = `frontend`** (framework Vite is auto-detected). Add the environment variable `VITE_API_URL` = your Render URL (e.g. `https://talentiq-api.onrender.com`, no trailing slash). Deploy.
 5. Go back to Render, set `CLIENT_URL` to the Vercel URL, and redeploy. Open the Vercel URL and sign in.
 
+<p align="center">
+  <a href="https://talent-iq-frontend-iota.vercel.app">
+    <img src="https://img.shields.io/badge/Live%20Demo-TalentIQ-blue?style=for-the-badge" alt="Live Demo">
+  </a>
+</p>
+
 ---
 
 ## Design decisions
